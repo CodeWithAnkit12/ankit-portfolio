@@ -96,7 +96,6 @@ export default function SiteMotion() {
       // -------------------------------------------------------
       const root = document.documentElement;
       const themeBtn = $("#themeToggle");
-      const osDark = window.matchMedia("(prefers-color-scheme: dark)");
 
       const applyTheme = (next, remember) => {
         root.setAttribute("data-theme", next);
@@ -122,20 +121,6 @@ export default function SiteMotion() {
         applyTheme(next, true);
         ScrollTrigger.refresh();
       });
-
-      // Follow the OS only while the visitor has not chosen for themselves.
-      const onOsChange = (e) => {
-        let stored = null;
-        try {
-          stored = localStorage.getItem("theme");
-        } catch {
-          /* ignore */
-        }
-        if (!stored) applyTheme(e.matches ? "dark" : "light", false);
-      };
-
-      osDark.addEventListener("change", onOsChange);
-      cleanups.push(() => osDark.removeEventListener("change", onOsChange));
 
       // -------------------------------------------------------
       // Smooth scroll

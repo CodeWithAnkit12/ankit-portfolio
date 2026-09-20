@@ -41,11 +41,12 @@ export default function RootLayout({ children }) {
       <head>
         {/*
           Applies the saved theme before first paint so the page never
-          flashes the wrong palette. Falls back to the OS preference.
+          flashes the wrong palette. Defaults to light unless the visitor
+          has explicitly chosen a theme.
         */}
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(!t){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('theme')||'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`,
           }}
         />
       </head>
